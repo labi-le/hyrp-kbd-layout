@@ -5,7 +5,6 @@ import (
 	"github.com/labi-le/hyprland-ipc-client"
 	"log"
 	"os"
-	"os/exec"
 )
 
 type Output struct {
@@ -24,40 +23,34 @@ type ed struct {
 	client.DummyEvHandler
 }
 
-func ReadFirstLayout() {
-	devices := map[string][]map[string]any{}
-	out, err := exec.Command("hyprctl", "devices", "-j").Output()
+func ReadFirstLayout(ipc client.IPC, evDispatcher client.EventHandler) {
+	devices, err := ipc.Devices()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	if err := json.Unmarshal(out, &devices); err != nil {
-		log.Fatal(err)
-	}
-
-	for _, device := range devices["keyboards"] {
-		if device["main"] == true {
-			text, ok := device["active_keymap"].(string)
-			if !ok {
-				log.Fatal("Could not read active keymap")
-			} else {
-				ToStdOut(Output{ 
-					Text:    text,
-					Tooltip: "Current keyboard layout",
-					Class:   "keyboard-layout",
-				})
-			}
-
-			
+	for _, device := range devices.Keyboards {
+		if device.Main {
+			evDispatcher.ActiveLayout(client.ActiveLayout{
+				Type: "keyboard",
+				Name: device.ActiveKeymap,
+			})
+			break
 		}
 	}
 }
 
 func main() {
-	ReadFirstLayout()
-	c := client.NewClient(os.Getenv("HYPRLAND_INSTANCE_SIGNATURE"))
-	e := &ed{}
-	client.Subscribe(c, e, client.EventActiveLayout)
+	var (
+		ipc          = client.NewClient(os.Getenv("HYPRLAND_INSTANCE_SIGNATURE"))
+		evDispatcher = &ed{}
+	)
+
+	ReadFirstLayout(ipc, evDispatcher)
+
+	if err := client.Subscribe(ipc, evDispatcher, client.EventActiveLayout); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func (e *ed) ActiveLayout(layout client.ActiveLayout) {
