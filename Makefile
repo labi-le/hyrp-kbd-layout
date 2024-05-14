@@ -5,6 +5,11 @@ BUILD_PATH = build/package/
 
 INSTALL_PATH = /usr/bin/
 
+.DEFAULT_GOAL := run
+
+run:
+	go run $(MAIN_PATH)
+
 install:
 	make build-default
 	sudo cp $(BUILD_PATH)$(PROJ_NAME) $(INSTALL_PATH)$(PROJ_NAME)
