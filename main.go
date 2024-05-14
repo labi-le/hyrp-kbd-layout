@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/labi-le/hyprland-ipc-client"
+	"github.com/labi-le/hyprland-ipc-client/v3"
 	"log"
 	"os"
 )
@@ -42,7 +42,7 @@ func ReadFirstLayout(ipc client.IPC, evDispatcher client.EventHandler) {
 
 func main() {
 	var (
-		ipc          = client.NewClient(os.Getenv("HYPRLAND_INSTANCE_SIGNATURE"))
+		ipc          = client.MustClient(os.Getenv("HYPRLAND_INSTANCE_SIGNATURE"))
 		evDispatcher = &ed{}
 	)
 
