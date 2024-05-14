@@ -2,3 +2,5 @@ github.com/labi-le/hyprland-ipc-client v1.0.3 h1:NvfazDlMf/pKl8sAqAO7BUwLEo3xxBc
 github.com/labi-le/hyprland-ipc-client v1.0.3/go.mod h1:JZ+LBSfp0aO33qOm6TMYqe7qD8CO9d8jMpGpqz6Yf3I=
 github.com/labi-le/hyprland-ipc-client/v3 v3.0.1 h1:Z65ZPPmrlQE1lzt9YKR5UYLD6H4qN2KO3xAweA1NW+Q=
 github.com/labi-le/hyprland-ipc-client/v3 v3.0.1/go.mod h1:5y18Ty27Br/BQcyhC45CaNofWmwXR8VzswlNnb5CYZA=
+github.com/labi-le/hyprland-ipc-client/v3 v3.0.2 h1:FhijVxBIiqzaRWINsuj0cy/cuBzzci4nzPfbcuHb50M=
+github.com/labi-le/hyprland-ipc-client/v3 v3.0.2/go.mod h1:5y18Ty27Br/BQcyhC45CaNofWmwXR8VzswlNnb5CYZA=
