@@ -1,9 +1,10 @@
+version: 2
 project_name: hypr-kbd-layout
 before:
   hooks:
     - go mod tidy
 archives:
-  - format: binary
+  - formats: [binary]
 builds:
   - main: "."
     mod_timestamp: '{{ .CommitTimestamp }}'
@@ -24,7 +25,7 @@ builds:
 checksum:
   name_template: 'checksums.txt'
 snapshot:
-  name_template: "{{ incpatch .Version }}-next"
+  version_template: "{{ incpatch .Version }}-next"
 changelog:
   sort: asc
   filters:
